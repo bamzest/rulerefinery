@@ -1,0 +1,7 @@
+# 直连
+
+# Tailscale
+PROCESS-NAME,tailscale
+PROCESS-NAME,tailscaled
+DOMAIN-SUFFIX,tailscale.com
+DOMAIN-SUFFIX,tailscale.io

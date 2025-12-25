@@ -1,0 +1,161 @@
+# ==========================================
+# RuleRefinery 配置文件
+# ==========================================
+
+# 日志配置
+logging:
+  level: "info"                # 日志级别：debug/info/warn/error
+  output_dir: "log"            # 日志目录
+  output_file: "app.log"       # 日志文件名
+  console_output: true         # 是否输出到控制台
+  format: "text"               # 日志格式：text 或 json
+
+# 代理配置
+proxy:
+  enabled: false               # 是否启用代理
+  urls: []                     # 代理服务器列表，支持 socks5://、http://、https://
+    # - socks5://127.0.0.1:1080
+    # - http://127.0.0.1:8080
+
+# 规则来源配置
+rule-sources:
+  github:
+    token: ""                  # GitHub Token（可选）
+    download_path: "./rule_sources/github/rules"  # 规则文件下载保存路径
+    download_threads: 10       # 并发下载线程数（1-50）
+    organize_by_repo: true     # 按 owner/repo/branch 组织目录
+    overwrite_rule_file: false # 是否覆盖已存在的文件 (调试期间建议设置为 false，避免频繁请求 GitHub)
+    
+    repositories:
+      - owner: "blackmatrix7"
+        repo: "ios_rule_script"
+        branch: "master"
+        path: ""               # 仓库内路径，空表示根目录
+        filters:
+          - pattern: "**/Clash/**/*.list"  # Glob 匹配模式
+            type: "clash-classic"          # 规则类型：surge/quanx/clash-domain/clash-ipcidr/clash-classic
+        excludes: []           # 排除模式列表
+          # - "*_ipv6.list"
+      
+      - owner: "ACL4SSR"
+        repo: "ACL4SSR"
+        branch: "master"
+        path: ""
+        filters:
+          - pattern: "**/*.list"
+            type: "clash-classic"
+        excludes: []
+        
+      - owner: "LM-Firefly"
+        repo: "Rules"
+        branch: "master"
+        path: ""
+        filters:
+          - pattern: "**/*.list"
+            type: "clash-classic"
+        excludes:
+          - "**/Special/sources.list"  # 排除 Ubuntu 软件源
+          - "**/Special/qBittorrent Search Plugin/Search Plugin.list"  # 排除 qBittorrent 搜索插件
+
+# AI 规则分类配置
+ai_classify_rules:
+  enabled: false               # 是否启用 AI 规则分类
+  classified_rules_file: "./rule_config/classified_rules.yaml"              # 现有分类文件路径（增量更新，AI结果会自动合并到此文件）
+  ai_generated_classified_rules: "./rule_config/ai_generated_classified_rules.yaml"  # AI 生成的分类文件输出路径（仅包含本次新增的分类）
+
+# 规则集生成配置
+generate_rules:
+  enabled: true                # 是否启用规则集生成
+  output_rules_path: "./rules/clash/"  # 规则集输出目录
+
+# AI 配置
+ai:
+  provider: ""         # AI 提供商：deepseek/openai/gemini/grok
+  api_key: ""                  # API 密钥
+  base_url: ""                 # API 基础 URL（可选）
+  model: ""                    # 模型名称（可选）
+  max_tokens: 2000             # 最大令牌数
+  temperature: 0.0             # 温度参数（0.0-2.0）
+  ai_request_timeout: 180      # AI 请求超时时间（秒）
+  rule_batch_size: 10          # 每批次分析的规则文件数量
+  batch_concurrency: 20        # 批次并发数量
+  
+  prompts:
+    # 规则分类提示词
+    # 支持占位符:
+    #   {RULE_FILES_INFO}: 规则文件信息（文件名、URL、规则数量、规则示例）
+    rule_classification: |
+      你是一个网络规则分类专家，擅长分析代理规则文件内容并进行分类。
+
+      ## 任务
+      分析以下规则文件的内容，将它们按照服务/应用类型进行分类。
+
+      ## 分类原则
+      1. 相同服务/应用的规则归为一类（如：Google、Netflix、OpenAI）
+      2. 相关服务拆分合并（如：Google、YouTube、Gmail 单独分类）
+
+      ## 规则文件信息
+
+      {RULE_FILES_INFO}
+
+      ## 输出格式
+      请以 YAML 格式输出分类结果。**分类名称必须严格遵循以下规则**：
+
+      ### 分类名称规则（非常重要）：
+      1. **使用规则文件的原始文件名（去除 .list 扩展名）作为分类名称**
+      2. **去掉文件名中的分隔符，包括下划线、横线和破折号等**
+      3. **所有分类名称必须全小写（如 google、youtube、openai）**
+      
+      ### 示例说明：
+      - 文件名：`2kgame.list` → 分类名称：`2kgame`（不是 game_2k 或者 game2k）
+      - 文件名：`OpenAI.list` → 分类名称：`openai`（全部小写）
+      - 文件名：`Apple_TV.list` → 分类名称：`appletv`（全部小写，去掉下划线）
+      - 文件名：`Disney-Plus.list` → 分类名称：`disneyplus`（全部小写，去掉横线）
+
+      ### YAML 格式示例：
+
+      ```yaml
+      classified_rules:
+        google:
+          description: "Google 服务"
+          urls:
+            - "https://raw.githubusercontent.com/owner/repo/branch/path/Google.list"
+        youtube: 
+          description: "YouTube 服务"
+          urls:
+            - "https://raw.githubusercontent.com/owner/repo/branch/path/YouTube.list"
+        vpn:
+          description: "VPN 服务"
+          files:
+            - "./subconverter/external_rule/vpn.list"
+        ai:
+          description: "AI 服务集合"
+          files:
+            - "./subconverter/external_rule/AI.list"
+          rules:
+            - "DOMAIN-SUFFIX,openai.com"
+            - "DOMAIN-SUFFIX,anthropic.com"
+        2kgame:
+          description: "2K Games 游戏服务"
+          urls:
+            - "https://raw.githubusercontent.com/owner/repo/branch/path/2kgame.list"
+        openai:
+          description: "OpenAI 人工智能服务"
+          urls:
+            - "https://raw.githubusercontent.com/owner/repo/branch/path/OpenAI.list"
+      ```
+
+      **字段说明：**
+      - `urls`: GitHub Raw URL 列表或者普通 URL 列表（可选）
+      - `files`: 本地文件路径列表（可选）
+      - `rules`: 手工添加的规则内容列表（可选）
+      - 每个分类至少需要有 urls、files 或 rules 其中之一
+
+      **重要要求：**
+      1. **URL 类型识别**：
+         - GitHub 规则：使用完整的 GitHub Raw URL（以 https://raw.githubusercontent.com/ 开头）
+         - 本地规则：使用相对路径（以 ./ 开头或者字符开头，相对于项目根目录）或者绝对路径（以 / 开头）
+         - 普通 URL 规则：使用完整的 HTTP/HTTPS URL
+      2. **URL 必须原样输出**：直接使用上面规则文件信息提供的 URL/路径，不要修改。如果是 URL，输出到 urls 列表；如果是本地文件路径，输出到 files 列表。
+      3. description 用中文简要描述该分类包含的服务
+      4. 只输出 YAML 代码块，不要有其他解释文字

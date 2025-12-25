@@ -1,0 +1,163 @@
+# GoReleaser 配置文件
+# 文档: https://goreleaser.com
+
+version: 2
+project_name: rulerefinery
+
+before:
+  hooks:
+    - go mod tidy
+    - go mod verify
+
+builds:
+  - id: rulerefinery
+    binary: rulerefinery
+    env:
+      - CGO_ENABLED=0
+
+    # 平台：Linux / macOS / Windows / BSD 系列
+    goos:
+      - linux
+      - darwin
+      - windows
+      - freebsd
+      - openbsd
+      - netbsd
+
+    # 架构：x86、x64、ARM32、ARM64
+    goarch:
+      - "386"
+      - amd64
+      - arm
+      - arm64
+
+    goarm:
+      - "6"
+      - "7"
+
+    ignore:
+      - goos: darwin
+        goarch: "386"
+      - goos: windows
+        goarch: arm
+        goarm: "6"
+      - goos: windows
+        goarch: arm
+        goarm: "7"
+
+    ldflags:
+      - -s -w
+      - -X main.Version={{.Version}}
+      - -X main.GitCommit={{.ShortCommit}}
+      - -X main.BuildTime={{.Date}}
+
+archives:
+  - formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    files:
+      - README.md
+      - LICENSE
+      - config.yaml
+
+dockers_v2:
+  - id: rulerefinery-image
+    dockerfile: Dockerfile
+    ids:
+      - rulerefinery
+    images:
+      - ghcr.io/{{ .Env.GH_DOCKER_OWNER }}/rulerefinery
+    tags:
+      - "{{ .Version }}"
+      - latest
+    extra_files:
+      - config.yaml
+    platforms:
+      - linux/amd64
+      - linux/arm64
+      - linux/arm/v7
+    flags:
+      - "--pull"
+      - "--cache-from=type=gha,scope=rulerefinery"
+      - "--cache-to=type=gha,scope=rulerefinery,mode=max"
+
+checksum:
+  name_template: 'checksums.txt'
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+      - '^ci:'
+      - 'README'
+      - Merge pull request
+      - Merge branch
+  groups:
+    - title: 'Features'
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 0
+    - title: 'Bug Fixes'
+      regexp: '^.*?fix(\(.+\))??!?:.+$'
+      order: 1
+    - title: 'Performance Improvements'
+      regexp: '^.*?perf(\(.+\))??!?:.+$'
+      order: 2
+    - title: 'Refactoring'
+      regexp: '^.*?refactor(\(.+\))??!?:.+$'
+      order: 3
+    - title: 'Other Changes'
+      order: 999
+
+release:
+  github:
+    owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
+    name: "{{ .Env.REPO_NAME }}"
+  draft: false
+  prerelease: auto
+  name_template: "{{.Tag}}"
+  make_latest: false
+  header: |
+    ## RuleRefinery {{ .Version }}
+    
+    Release Date: {{ .Date }}
+    
+    ### 下载说明
+    
+    根据您的操作系统和架构选择对应的文件下载：
+    
+    - **Linux**: `*_linux_*.tar.gz`
+    - **macOS**: `*_darwin_*.tar.gz`
+    - **Windows**: `*_windows_*.zip`
+    - **FreeBSD/OpenBSD/NetBSD**: 对应的 `*.tar.gz`
+    
+    架构说明：
+    - `x86_64` / `amd64`: 64位 x86 架构
+    - `i386` / `386`: 32位 x86 架构
+    - `arm64`: 64位 ARM 架构（Apple Silicon, Raspberry Pi 4 等）
+    - `armv6` / `armv7`: 32位 ARM 架构（Raspberry Pi 老版本等）
+    
+    ---
+
+  footer: |
+    ---
+    
+    **完整变更日志**: https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .Env.REPO_NAME }}/compare/{{ .PreviousTag }}...{{ .Tag }}

@@ -1,0 +1,136 @@
+# ==========================================
+# RuleRefinery - Git Ignore
+# ==========================================
+
+# ==========================================
+# Binaries
+# ==========================================
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+rulerefinery
+rulerefinery-*
+
+# ==========================================
+# Go Build & Test
+# ==========================================
+# Test binary
+*.test
+
+# Coverage
+*.out
+coverage.html
+coverage.xml
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+go.work.sum
+
+# ==========================================
+# Build Output
+# ==========================================
+build/
+dist/
+output/
+
+# ==========================================
+# Logs & Debug
+# ==========================================
+log/
+logs/
+*.log
+
+# ==========================================
+# IDE & Editors
+# ==========================================
+# JetBrains
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw[a-z]
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# OS Files
+# ==========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# ==========================================
+# Environment & Config
+# ==========================================
+.env
+.env.local
+.env.*.local
+.envrc
+
+# Local configuration overrides
+config.*.yaml
+
+# ==========================================
+# Cloudflare Worker
+# ==========================================
+cloudflare/worker/*/node_modules/
+cloudflare/worker/*/dist/
+cloudflare/worker/*/.wrangler/
+cloudflare/worker/*/.dev.vars
+cloudflare/worker/*/.mf/
+cloudflare/worker/*/.cache/
+!cloudflare/worker/*/wrangler.toml
+!cloudflare/worker/*/wrangler.jsonc
+cloudflare/worker/*/*.log
+
+# ==========================================
+# Project Specific
+# ==========================================
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Backup files
+*.bak
+*.backup
+*~.nib
+
+rules/
+
+**/*.log

@@ -1,0 +1,156 @@
+RuleRefinery Non-Commercial Open Source License
+Version 1.0, December 2025
+
+Copyright (c) 2025 RuleRefinery Contributors
+
+================================================================================
+TERMS AND CONDITIONS
+================================================================================
+
+1. DEFINITIONS
+
+   "Software" refers to RuleRefinery and all associated source code, documentation,
+   and related materials.
+   
+   "Commercial Use" means any use of the Software primarily intended for or directed
+   toward commercial advantage or monetary compensation, including but not limited to:
+   - Providing services to third parties for a fee
+   - Selling the Software or derivative works
+   - Using the Software in a commercial product or service
+   - Using the Software to generate revenue directly or indirectly
+   
+   "Derivative Work" means any work based on or derived from the Software.
+   
+   "You" means any individual or legal entity exercising rights under this License.
+
+2. GRANT OF LICENSE
+
+   Subject to the terms and conditions of this License, You are granted:
+   
+   a) The right to use, copy, and modify the Software for NON-COMMERCIAL purposes only.
+   
+   b) The right to distribute the Software and Derivative Works, provided that:
+      - All distributions are NON-COMMERCIAL
+      - The complete source code is made available
+      - This License is included with all copies
+      - All modifications are clearly documented
+
+3. COPYLEFT REQUIREMENT (MANDATORY OPEN SOURCE)
+
+   If You distribute the Software or any Derivative Work, You MUST:
+   
+   a) Make the complete source code publicly available under this same License.
+   
+   b) Clearly document all modifications made to the original Software.
+   
+   c) Include this License file and copyright notice in all copies.
+   
+   d) If the Software is used to provide a network service, You MUST make the
+      complete source code (including all modifications) available to all users
+      of that service.
+   
+   e) License all Derivative Works under this same License or a compatible
+      copyleft license.
+
+4. PROHIBITIONS
+
+   You MAY NOT:
+   
+   a) Use the Software or any Derivative Work for Commercial Use.
+   
+   b) Distribute the Software or Derivative Works without making the complete
+      source code publicly available.
+   
+   c) Relicense the Software under terms that allow Commercial Use or do not
+      require source code disclosure.
+   
+   d) Remove or modify this License or copyright notices.
+   
+   e) Claim that your Derivative Work is the original Software.
+   
+   f) Use the names, trademarks, or branding of the original authors to promote
+      Derivative Works without written permission.
+
+5. ATTRIBUTION REQUIREMENT
+
+   All copies and Derivative Works must retain:
+   
+   a) The original copyright notice
+   b) This License in its entirety
+   c) A clear statement of modifications made (if any)
+   d) Attribution to the original authors
+
+6. NETWORK USE (AGPL-Style Provision)
+
+   If You run a modified version of the Software on a server and let other users
+   communicate with it there, You MUST provide those users with access to the
+   complete source code of your modified version, including all modifications.
+
+7. COMMERCIAL LICENSE OPTION
+
+   If You wish to use the Software for Commercial Use, You must obtain a separate
+   commercial license from the copyright holders. Contact the project maintainers
+   for commercial licensing options.
+
+8. DISCLAIMER OF WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+9. LIMITATION OF LIABILITY
+
+   IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+   DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+   DEALINGS IN THE SOFTWARE.
+
+10. TERMINATION
+
+    Your rights under this License terminate automatically if You fail to comply
+    with any of its terms. Upon termination, You must:
+    
+    a) Cease all use of the Software
+    b) Destroy all copies in your possession
+    c) Remove any publicly distributed copies (if possible)
+
+11. MISCELLANEOUS
+
+    a) This License represents the complete agreement concerning the subject matter.
+    
+    b) If any provision is found to be unenforceable, it shall be modified to the
+       minimum extent necessary to make it enforceable, or severed if modification
+       is not possible.
+    
+    c) This License is governed by the laws applicable in the jurisdiction where
+       the copyright holder resides.
+    
+    d) Any disputes shall be resolved in the courts of that jurisdiction.
+
+================================================================================
+SUMMARY (NOT LEGALLY BINDING)
+================================================================================
+
+✓ You CAN:
+  - Use the Software for personal, educational, or research purposes
+  - Modify and improve the Software
+  - Share the Software with others (non-commercially)
+  - Create derivative works (must be open source and non-commercial)
+
+✗ You CANNOT:
+  - Use the Software for commercial purposes without a commercial license
+  - Keep your modifications private (all derivatives must be open source)
+  - Sell the Software or charge for services based on it
+  - Remove or modify this license
+
+================================================================================
+COMMERCIAL LICENSING
+================================================================================
+
+For commercial use inquiries, please contact the project maintainers.
+
+================================================================================
+
+This is a custom copyleft license with a non-commercial restriction. It requires
+all derivative works to be open source (similar to GPL/AGPL) while prohibiting
+commercial use without a separate commercial license.
