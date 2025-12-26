@@ -56,6 +56,23 @@ rule-sources:
         excludes:
           - "**/Special/sources.list"  # 排除 Ubuntu 软件源
           - "**/Special/qBittorrent Search Plugin/Search Plugin.list"  # 排除 qBittorrent 搜索插件
+          - "**/CCC-Global.list"
+
+      - owner: "bunizao"
+        repo: "TutuBetterRules"
+        branch: "tutu"
+        path: "RuleList/"
+        filters:
+          - pattern: "**/*.list"
+            type: "clash-classic"
+        excludes:
+          - "**/DOMAlN/Anti-IPCheck.list"  # 反 IP 检查不适合设置为规则
+          - "**/DOMAlN/blocked_by_eduroam.list"  # 规则混乱
+          - "**/DOMAlN/CarrotWeather.list"  # 天气应用不适合设置为规则
+          - "**/HOST/IPCheck.list"  #  内容错误
+          - "**/DOMAlN/Spot-Wiki.list"  # 包含Apple相关域名，分类不明确
+          - "**/DOMAlN/Whitelist_Proxy.list" # 白名单不生效
+          - "**/DOMAlN/Regions/China.list" # 空文件
 
 # AI 规则分类配置
 ai_classify_rules:

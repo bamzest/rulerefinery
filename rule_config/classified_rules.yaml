@@ -222,6 +222,10 @@ classified_rules:
         description: 广告拦截规则
         urls:
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Adblock/Adblock.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/AD.Reject.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/AD.Reject-Drop.list
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.list
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite.list
         files: []
         rules: []
     adcolony:
@@ -269,18 +273,6 @@ classified_rules:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdobeActivation/AdobeActivation.list
         files: []
         rules: []
-    advertising:
-        description: 通用广告服务
-        urls:
-            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising.list
-        files: []
-        rules: []
-    advertisinglite:
-        description: 精简版广告服务
-        urls:
-            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdvertisingLite/AdvertisingLite.list
-        files: []
-        rules: []
     advertisingmitv:
         description: 小米电视广告服务
         urls:
@@ -323,8 +315,9 @@ classified_rules:
         description: 人工智能服务规则
         urls:
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AI.list
-        files: 
-            - "./rule_config/custom/ai.list"
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/AI.list
+        files:
+            - ./rule_config/custom/ai.list
         rules: []
     aiqicha:
         description: 爱企查企业信息查询服务
@@ -542,6 +535,7 @@ classified_rules:
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Apple.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Apple.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Apple_Direct.list
         files: []
         rules: []
     appledaily:
@@ -594,12 +588,14 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleNews/AppleNews.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AppleNews.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/AppleNews.list
         files: []
         rules: []
     appleproxy:
         description: Apple 代理相关服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AppleProxy/AppleProxy.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Apple_Proxy.list
         files: []
         rules: []
     appletv:
@@ -642,10 +638,10 @@ classified_rules:
     assassinscreedodyssey:
         description: 刺客信条
         urls:
-            - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Assassin'sCreed/Assassin'sCreed-Odyssey/Assassin'sCreed-Odyssey.list"
-            - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Assassin'sCreed-Odyssey/Assassin'sCreed-Odyssey.list"
-            - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Assassin'sCreed/Assassin'sCreed-Origins/Assassin'sCreed-Origins.list"
-            - "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Assassin'sCreed-Origins/Assassin'sCreed-Origins.list"
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Assassin'sCreed/Assassin'sCreed-Odyssey/Assassin'sCreed-Odyssey.list
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Assassin'sCreed-Odyssey/Assassin'sCreed-Odyssey.list
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Assassin'sCreed/Assassin'sCreed-Origins/Assassin'sCreed-Origins.list
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Assassin'sCreed-Origins/Assassin'sCreed-Origins.list
         files: []
         rules: []
     atlassian:
@@ -1004,18 +1000,6 @@ classified_rules:
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/CCB.list
         files: []
         rules: []
-    chinacloudservices:
-        description: 中国云服务集合
-        urls:
-            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-CN.list
-        files: []
-        rules: []
-    globalcloudservices:
-        description: 全球云服务集合
-        urls:
-            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-Global.list
-        files: []
-        rules: []
     cctv:
         description: 中国中央电视台相关服务
         urls:
@@ -1050,6 +1034,18 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChengTongWangPan/ChengTongWangPan.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/ChengTongWangPan.list
+        files: []
+        rules: []
+    china:
+        description: 中国地区相关域名规则
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Regions/China.list
+        files: []
+        rules: []
+    chinacloudservices:
+        description: 中国云服务集合
+        urls:
+            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/CCC-CN.list
         files: []
         rules: []
     chinacompanyip:
@@ -1095,13 +1091,6 @@ classified_rules:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaIPs/ChinaIPsTest/ChinaIPsTest.list
         files: []
         rules: []
-    chinanomedia:
-        description: 中国大陆非媒体服务（大范围）
-        urls:
-            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaNoMedia/ChinaNoMedia.list
-            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMaxNoMedia/ChinaMaxNoMedia.list
-        files: []
-        rules: []
     chinamedia:
         description: 中国大陆媒体服务
         urls:
@@ -1127,6 +1116,13 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaNews/ChinaNews.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/ChinaNews.list
+        files: []
+        rules: []
+    chinanomedia:
+        description: 中国大陆非媒体服务（大范围）
+        urls:
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaNoMedia/ChinaNoMedia.list
+            - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMaxNoMedia/ChinaMaxNoMedia.list
         files: []
         rules: []
     chinaonekeylogin:
@@ -1511,20 +1507,22 @@ classified_rules:
     direct:
         description: 直连规则集合
         urls:
+            - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Download.list
+            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Download.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Direct.list
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct.list
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/AdGuardSDNSFilter/Direct/Direct.list
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list
-            - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Download.list
-            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Special/Download.list
-        files: 
-            - "./rule_config/custom/direct.list"
+        files:
+            - ./rule_config/custom/direct.list
         rules: []
         filters:
-            - "PROCESS-NAME,**"
+            - PROCESS-NAME,**
     discord:
         description: Discord 社交聊天服务
         urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Discord.list
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Discord/Discord.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Discord.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Discord.list
@@ -1625,6 +1623,8 @@ classified_rules:
         description: 抖音短视频服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/DouYin/DouYin.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Douyin.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Douyin_ByteDance.list
         files: []
         rules: []
     douyu:
@@ -1756,6 +1756,7 @@ classified_rules:
         description: Emby 媒体服务器软件
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Emby.list
         files: []
         rules: []
     emojipedia:
@@ -2039,6 +2040,7 @@ classified_rules:
         description: 全球通用服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Global/Global.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Global.list
         files: []
         rules: []
     globalmedia:
@@ -2119,6 +2121,7 @@ classified_rules:
         description: Google 搜索服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GoogleSearch/GoogleSearch.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Google_Search.list
         files: []
         rules: []
     googlevoice:
@@ -2297,6 +2300,12 @@ classified_rules:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/HKOpenTV/HKOpenTV.list
         files: []
         rules: []
+    hongkong:
+        description: 香港地区相关域名规则
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Regions/Hong-Kong.list
+        files: []
+        rules: []
     hoyoverse:
         description: 米哈游游戏及相关服务
         urls:
@@ -2421,12 +2430,14 @@ classified_rules:
         description: Apple iCloud 云服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/iCloud/iCloud.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/iCloud.list
         files: []
         rules: []
     icloudprivaterelay:
         description: Apple iCloud 私密中继服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/iCloudPrivateRelay/iCloudPrivateRelay.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/iCloudPrivateRelay.list
         files: []
         rules: []
     identrust:
@@ -2934,6 +2945,7 @@ classified_rules:
         description: 邮件服务
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Mail/Mail.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Mail.list
         files: []
         rules: []
     mailru:
@@ -3350,9 +3362,10 @@ classified_rules:
     openai:
         description: OpenAI 人工智能服务
         urls:
+            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/OpenAI.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/OpenAI.list
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/OpenAI/OpenAI.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list
-            - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/OpenAI.list
         files: []
         rules: []
     opera:
@@ -3428,6 +3441,12 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PandoraTV/PandoraTV.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/PandoraTV.list
+        files: []
+        rules: []
+    parallels:
+        description: Parallels 虚拟机软件
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Parallels.list
         files: []
         rules: []
     paramountplus:
@@ -3568,6 +3587,7 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Pornhub.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/Pornhub.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Pornhub_R18.list
         files: []
         rules: []
     potatochat:
@@ -4132,9 +4152,10 @@ classified_rules:
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/TaiKang.list
         files: []
         rules: []
-    taiwangood:
-        description: 台湾相关服务
+    taiwan:
+        description: 台湾地区规则
         urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Regions/Taiwan.list
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/TaiWanGood/TaiWanGood.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/TaiWanGood.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Global-Services/TaiWanGood.list
@@ -4182,6 +4203,7 @@ classified_rules:
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Telegram.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Telegram.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Telegram.list
         files: []
         rules: []
     telegramnl:
@@ -4268,8 +4290,8 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Threads/Threads.list
         files: []
-        rules: 
-            - "DOMAIN-SUFFIX,threads.com"
+        rules:
+            - DOMAIN-SUFFIX,threads.com
     tiantiankankan:
         description: 天天看看视频平台
         urls:
@@ -4326,6 +4348,12 @@ classified_rules:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Tmdb/Tmdb.list
         files: []
         rules: []
+    tmobile:
+        description: T-Mobile 运营商服务
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/T-Mobile.list
+        files: []
+        rules: []
     tongcheng:
         description: 同程旅行服务
         urls:
@@ -4364,6 +4392,12 @@ classified_rules:
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Tumblr.list
         files: []
         rules: []
+    turkiye:
+        description: 土耳其地区服务（如支付、电商）
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Regions/Turkiye.list
+        files: []
+        rules: []
     tvb:
         description: TVB 电视广播及相关服务
         urls:
@@ -4392,6 +4426,7 @@ classified_rules:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Twitter.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Twitter.list
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Twitter.list
         files: []
         rules: []
     u17:
@@ -4458,6 +4493,18 @@ classified_rules:
         urls:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UnionPay/UnionPay.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/Domestic-Services/UnionPay.list
+        files: []
+        rules: []
+    unitedkingdom:
+        description: 英国地区服务（如 Monzo 银行）
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Regions/United-Kingdom.list
+        files: []
+        rules: []
+    unitedstates:
+        description: 美国地区服务（如 Peacock、HBO Max、Cinemax）
+        urls:
+            - https://raw.githubusercontent.com/bunizao/TutuBetterRules/tutu/RuleList/DOMAlN/Regions/United-States.list
         files: []
         rules: []
     unity:
