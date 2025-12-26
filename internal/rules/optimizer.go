@@ -645,13 +645,15 @@ func (o *Optimizer) exportIPCIDRNoResolve(ruleSet *RuleSet, ruleSetDir string) e
 
 		for _, rule := range filtered {
 			// 检查是否已有 no-resolve 参数
+			var fullRule string
 			if strings.Contains(rule, "no-resolve") {
-				// 已有 no-resolve，直接添加
-				ipcidrRules = append(ipcidrRules, rule)
+				// 已有 no-resolve，构造完整规则
+				fullRule = fmt.Sprintf("%s,%s", ruleType, rule)
 			} else {
-				// 没有 no-resolve，添加它
-				ipcidrRules = append(ipcidrRules, rule+",no-resolve")
+				// 没有 no-resolve，添加它并构造完整规则
+				fullRule = fmt.Sprintf("%s,%s,no-resolve", ruleType, rule)
 			}
+			ipcidrRules = append(ipcidrRules, fullRule)
 		}
 	}
 	totalRules := len(ipcidrRules)
