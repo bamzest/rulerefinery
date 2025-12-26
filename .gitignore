@@ -97,6 +97,7 @@ $RECYCLE.BIN/
 # Environment & Config
 # ==========================================
 .env
+.env-*
 .env.local
 .env.*.local
 .envrc
