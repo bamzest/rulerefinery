@@ -443,13 +443,20 @@ func (o *Optimizer) Export(outputDir string) error {
 		if err := o.exportIPCIDR(ruleSet, ruleSetDir); err != nil {
 			return err
 		}
-		if err := o.exportIPCIDRNoResolve(ruleSet, ruleSetDir); err != nil {
+		// classical (非 domain/ipcidr，无 no-resolve)
+		if err := o.exportClassical(ruleSet, ruleSetDir, false, false); err != nil {
 			return err
 		}
-		if err := o.exportClassical(ruleSet, ruleSetDir, false); err != nil {
+		// classical_no_resolve (非 domain/ipcidr，有 no-resolve)
+		if err := o.exportClassical(ruleSet, ruleSetDir, false, true); err != nil {
 			return err
 		}
-		if err := o.exportClassical(ruleSet, ruleSetDir, true); err != nil {
+		// classical_all (所有规则，无 no-resolve)
+		if err := o.exportClassical(ruleSet, ruleSetDir, true, false); err != nil {
+			return err
+		}
+		// classical_all_no_resolve (所有规则，有 no-resolve)
+		if err := o.exportClassical(ruleSet, ruleSetDir, true, true); err != nil {
 			return err
 		}
 	}
@@ -606,91 +613,33 @@ func (o *Optimizer) exportIPCIDR(ruleSet *RuleSet, ruleSetDir string) error {
 	return nil
 }
 
-// exportIPCIDRNoResolve 导出 {name}_ipcidr_no_resolve 文件（保留 no-resolve 参数）
-// IPCIDR behavior 只接受纯 CIDR 格式，如：192.168.0.0/16 或 2001:db8::/32
-// 注意：保留 no-resolve 参数
-// 只支持 IP-CIDR 和 IP-CIDR6
-// 其他类型（SRC-IP-CIDR, IP-ASN 等）不被 ipcidr behavior 支持，需要使用 classical
-func (o *Optimizer) exportIPCIDRNoResolve(ruleSet *RuleSet, ruleSetDir string) error {
-	// 输出 yaml
-	yamlPath := filepath.Join(ruleSetDir, fmt.Sprintf("%s_ipcidr_no_resolve.yaml", ruleSet.Name))
-	yamlFile, err := os.Create(yamlPath)
-	if err != nil {
-		return err
-	}
-	defer yamlFile.Close()
-
-	// 输出 list
-	listPath := filepath.Join(ruleSetDir, fmt.Sprintf("%s_ipcidr_no_resolve.list", ruleSet.Name))
-	listFile, err := os.Create(listPath)
-	if err != nil {
-		return err
-	}
-	defer listFile.Close()
-
-	// 收集所有 IP CIDR 规则（确保都有 no-resolve 参数）
-	var ipcidrRules []string
-	ipTypes := []RuleType{
-		RuleTypeIPCIDR,
-		RuleTypeIPCIDR6,
-	}
-	for _, ruleType := range ipTypes {
-		rules, exists := ruleSet.Rules[ruleType]
-		if !exists || len(rules) == 0 {
-			continue
-		}
-
-		// 先应用过滤器
-		filtered := o.applyRuleFilters(rules, ruleType, ruleSet.Filters, ruleSet.Excludes)
-
-		for _, rule := range filtered {
-			// 检查是否已有 no-resolve 参数
-			var fullRule string
-			if strings.Contains(rule, "no-resolve") {
-				// 已有 no-resolve，构造完整规则
-				fullRule = fmt.Sprintf("%s,%s", ruleType, rule)
-			} else {
-				// 没有 no-resolve，添加它并构造完整规则
-				fullRule = fmt.Sprintf("%s,%s,no-resolve", ruleType, rule)
-			}
-			ipcidrRules = append(ipcidrRules, fullRule)
-		}
-	}
-	totalRules := len(ipcidrRules)
-
-	if totalRules == 0 {
-		fmt.Fprintf(yamlFile, "# 无规则内容，自动生成占位\npayload: []\n")
-		fmt.Fprintf(listFile, "# 无规则内容，自动生成占位\n")
-		log.Info().Msgf("生成空文件: %s, %s (仅注释)", yamlPath, listPath)
-		return nil
-	}
-	fmt.Fprintf(yamlFile, "payload:\n")
-	for _, rule := range ipcidrRules {
-		fmt.Fprintf(yamlFile, "  - '%s'\n", rule)
-	}
-	for _, rule := range ipcidrRules {
-		fmt.Fprintf(listFile, "%s\n", rule)
-	}
-	log.Info().Msgf("生成文件: %s, %s (%d 条规则)", yamlPath, listPath, totalRules)
-	return nil
-}
-
 // exportClassical 导出 classical 格式
 // includeAll: true 导出所有规则（{name}_classical_all），false 只导出非 domain 和非 ipcidr 的规则（{name}_classical）
+// withNoResolve: true IP-CIDR 规则保留/添加 no-resolve 参数，false 移除 no-resolve 参数
 // Classical behavior 支持所有规则类型，包括：
 // - Domain 类型: DOMAIN, DOMAIN-SUFFIX, DOMAIN-KEYWORD, DOMAIN-WILDCARD, DOMAIN-REGEX
 // - IP 类型: IP-CIDR, IP-CIDR6, SRC-IP-CIDR, IP-ASN 等
 // - 进程类型: PROCESS-NAME, PROCESS-PATH 等
 // - 其他: GEOIP, GEOSITE, DST-PORT, RULE-SET 等
-func (o *Optimizer) exportClassical(ruleSet *RuleSet, ruleSetDir string, includeAll bool) error {
+func (o *Optimizer) exportClassical(ruleSet *RuleSet, ruleSetDir string, includeAll bool, withNoResolve bool) error {
 	// 输出 yaml
 	var yamlPath, listPath string
 	if includeAll {
-		yamlPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_all.yaml", ruleSet.Name))
-		listPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_all.list", ruleSet.Name))
+		if withNoResolve {
+			yamlPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_all_no_resolve.yaml", ruleSet.Name))
+			listPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_all_no_resolve.list", ruleSet.Name))
+		} else {
+			yamlPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_all.yaml", ruleSet.Name))
+			listPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_all.list", ruleSet.Name))
+		}
 	} else {
-		yamlPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical.yaml", ruleSet.Name))
-		listPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical.list", ruleSet.Name))
+		if withNoResolve {
+			yamlPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_no_resolve.yaml", ruleSet.Name))
+			listPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical_no_resolve.list", ruleSet.Name))
+		} else {
+			yamlPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical.yaml", ruleSet.Name))
+			listPath = filepath.Join(ruleSetDir, fmt.Sprintf("%s_classical.list", ruleSet.Name))
+		}
 	}
 	yamlFile, err := os.Create(yamlPath)
 	if err != nil {
@@ -716,6 +665,13 @@ func (o *Optimizer) exportClassical(ruleSet *RuleSet, ruleSetDir string, include
 		fmt.Fprintf(listFile, "# %s - Classical Format (Other Rules)\n", ruleSet.Name)
 		fmt.Fprintf(listFile, "# Excludes rules that can use domain.list (DOMAIN/DOMAIN-SUFFIX)\n")
 		fmt.Fprintf(listFile, "# and ipcidr.list (IP-CIDR/IP-CIDR6)\n")
+	}
+	if withNoResolve {
+		fmt.Fprintf(yamlFile, "# IP-CIDR rules include 'no-resolve' parameter\n")
+		fmt.Fprintf(listFile, "# IP-CIDR rules include 'no-resolve' parameter\n")
+	} else {
+		fmt.Fprintf(yamlFile, "# IP-CIDR rules exclude 'no-resolve' parameter\n")
+		fmt.Fprintf(listFile, "# IP-CIDR rules exclude 'no-resolve' parameter\n")
 	}
 	fmt.Fprintf(yamlFile, "# Rules are optimized and sorted for best performance\n")
 	fmt.Fprintf(listFile, "# Rules are optimized and sorted for best performance\n")
@@ -748,7 +704,14 @@ func (o *Optimizer) exportClassical(ruleSet *RuleSet, ruleSetDir string, include
 			continue
 		}
 		if !includeAll {
-			if domainListTypes[ruleType] || ipcidrListTypes[ruleType] {
+			// 对于 classical 和 classical_no_resolve，处理规则排除逻辑
+			// - 始终排除 domain 类型（已单独导出到 domain.list）
+			// - 对于不带 no-resolve 的版本，也排除 ipcidr 类型（已单独导出到 ipcidr.list）
+			// - 对于带 no-resolve 的版本，包含 ipcidr 类型（因为 ipcidr.list 不带 no-resolve）
+			if domainListTypes[ruleType] {
+				continue
+			}
+			if ipcidrListTypes[ruleType] && !withNoResolve {
 				continue
 			}
 		}
@@ -762,37 +725,53 @@ func (o *Optimizer) exportClassical(ruleSet *RuleSet, ruleSetDir string, include
 		// YAML 输出
 		fmt.Fprintf(yamlFile, "\n  # %s (%d rules)\n", ruleType, len(filtered))
 		for _, rule := range filtered {
-			// 对于 IP-CIDR 和 IP-CIDR6 类型，移除 no-resolve 参数
-			cleanRule := rule
+			// 对于 IP-CIDR 和 IP-CIDR6 类型，根据 withNoResolve 参数处理 no-resolve
+			processedRule := rule
 			if ruleType == RuleTypeIPCIDR || ruleType == RuleTypeIPCIDR6 {
-				parts := strings.Split(rule, ",")
-				cleanParts := []string{}
-				for _, part := range parts {
-					if strings.TrimSpace(part) != "no-resolve" {
-						cleanParts = append(cleanParts, part)
+				if withNoResolve {
+					// 确保有 no-resolve 参数
+					if !strings.Contains(rule, "no-resolve") {
+						processedRule = rule + ",no-resolve"
 					}
+				} else {
+					// 移除 no-resolve 参数
+					parts := strings.Split(rule, ",")
+					cleanParts := []string{}
+					for _, part := range parts {
+						if strings.TrimSpace(part) != "no-resolve" {
+							cleanParts = append(cleanParts, part)
+						}
+					}
+					processedRule = strings.Join(cleanParts, ",")
 				}
-				cleanRule = strings.Join(cleanParts, ",")
 			}
-			fmt.Fprintf(yamlFile, "  - '%s,%s'\n", ruleType, cleanRule)
+			fmt.Fprintf(yamlFile, "  - '%s,%s'\n", ruleType, processedRule)
 			totalRules++
 		}
 		// list 输出
 		fmt.Fprintf(listFile, "\n# %s (%d rules)\n", ruleType, len(filtered))
 		for _, rule := range filtered {
-			// 对于 IP-CIDR 和 IP-CIDR6 类型，移除 no-resolve 参数
-			cleanRule := rule
+			// 对于 IP-CIDR 和 IP-CIDR6 类型，根据 withNoResolve 参数处理 no-resolve
+			processedRule := rule
 			if ruleType == RuleTypeIPCIDR || ruleType == RuleTypeIPCIDR6 {
-				parts := strings.Split(rule, ",")
-				cleanParts := []string{}
-				for _, part := range parts {
-					if strings.TrimSpace(part) != "no-resolve" {
-						cleanParts = append(cleanParts, part)
+				if withNoResolve {
+					// 确保有 no-resolve 参数
+					if !strings.Contains(rule, "no-resolve") {
+						processedRule = rule + ",no-resolve"
 					}
+				} else {
+					// 移除 no-resolve 参数
+					parts := strings.Split(rule, ",")
+					cleanParts := []string{}
+					for _, part := range parts {
+						if strings.TrimSpace(part) != "no-resolve" {
+							cleanParts = append(cleanParts, part)
+						}
+					}
+					processedRule = strings.Join(cleanParts, ",")
 				}
-				cleanRule = strings.Join(cleanParts, ",")
 			}
-			fmt.Fprintf(listFile, "%s,%s\n", ruleType, cleanRule)
+			fmt.Fprintf(listFile, "%s,%s\n", ruleType, processedRule)
 		}
 	}
 	if totalRules > 0 {
