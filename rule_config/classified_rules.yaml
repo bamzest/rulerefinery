@@ -2027,7 +2027,8 @@ classified_rules:
             - https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub.list
             - https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Github.list
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Github.list
-        files: []
+        files:
+            - ./rule_config/custom/github.list
         rules: []
     gitlab:
         description: GitLab 代码托管服务

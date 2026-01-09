@@ -1,0 +1,56 @@
+name: Sync to proxyrules
+
+on:
+  push:
+    paths:
+      - 'rule_config/**'
+      - 'scripts/**'
+      - '.github/workflows/sync-to-proxyrules.yml'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      TARGET_REPO: bamzest/proxyrules
+      TARGET_BRANCH: master
+      SYNC_ITEMS: |
+        rule_config/:rule_config/
+        scripts/:scripts/
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Clone target repository
+        run: |
+          git clone --depth 1 "https://x-access-token:${{ secrets.GH_API_TOKEN }}@github.com/${TARGET_REPO}.git" /tmp/target
+
+      - name: Sync mapped paths
+        run: |
+          set -e
+          while IFS=: read -r src dst; do
+            [[ -z "$src" ]] && continue
+            echo "Syncing $src -> $dst"
+            if [ -d "$src" ]; then
+              mkdir -p "/tmp/target/$dst"
+              rsync -a --delete "$src/" "/tmp/target/$dst/"
+            else
+              mkdir -p "/tmp/target/$(dirname "$dst")"
+              rsync -a "$src" "/tmp/target/$dst"
+            fi
+          done <<< "${SYNC_ITEMS}"
+
+      - name: Commit and push changes
+        run: |
+          cd /tmp/target
+          if git status --porcelain | grep -q .; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "chore: sync from rulerefinery"
+            git push origin "${TARGET_BRANCH}"
+          else
+            echo "No changes to sync"
+          fi

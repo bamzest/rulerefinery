@@ -135,3 +135,5 @@ temp/
 rules/
 
 **/*.log
+
+**/.history/
