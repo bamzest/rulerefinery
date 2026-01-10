@@ -5,3 +5,10 @@ PROCESS-NAME,tailscale
 PROCESS-NAME,tailscaled
 DOMAIN-SUFFIX,tailscale.com
 DOMAIN-SUFFIX,tailscale.io
+
+# github 代理
+DOMAIN-SUFFIX,ghfast.top
+
+# jsdelivr cdn
+DOMAIN-SUFFIX,jsdelivr.net
+DOMAIN-SUFFIX,jsdelivr.com

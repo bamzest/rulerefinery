@@ -1517,8 +1517,7 @@ classified_rules:
         files:
             - ./rule_config/custom/direct.list
         rules: []
-        filters:
-            - PROCESS-NAME,**
+        excludes: [ '**google**']
     discord:
         description: Discord 社交聊天服务
         urls:
