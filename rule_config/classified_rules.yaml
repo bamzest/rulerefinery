@@ -2078,6 +2078,7 @@ classified_rules:
             - https://raw.githubusercontent.com/LM-Firefly/Rules/master/PROXY/Google.list
         files: []
         rules: []
+        excludes: ['**youtube**']
     googlecn:
         description: Google 中国服务域名规则
         urls:
